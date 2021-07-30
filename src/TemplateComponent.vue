@@ -14,6 +14,10 @@ export default class MyComponent extends Vue {
   msgChanged(newVal: string) {
     this.msg = newVal;
   }
+
+  mounted() {
+    this.msg = 'hi';
+  }
 }
 </script>
 <style scoped lang="scss">
