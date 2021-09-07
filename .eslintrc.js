@@ -17,6 +17,8 @@ module.exports = {
     "vue/component-name-in-template-casing": ["error", "PascalCase"],
     "no-console": process.env.NODE_ENV === "production" ? "error" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off",
+    "unicorn/no-nested-ternary": "off",
+    "unicorn/filename-case": "off",
   },
   parserOptions: {
     parser: "@typescript-eslint/parser",
