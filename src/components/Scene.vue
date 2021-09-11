@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Sky :scene="scene" :frustum-size="frustumSize"></Sky>
     <Ground :scene="scene" :frustum-size="frustumSize"></Ground>
     <Ball :scene="scene" :frustum-size="frustumSize"></Ball>
     <Goal :scene="scene" :frustum-size="frustumSize" side="right"></Goal>
@@ -11,6 +10,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import { generateBackgroundMaterial } from '@/utils/materials'
 import Ground from './Ground.vue'
 import Ball from './Ball.vue'
 import Goal from './Goal.vue'
@@ -35,7 +35,7 @@ export default class Scene extends Vue {
   }
 
   private initializeScene() {
-    this.scene.background = new THREE.Color(0xcc_e0_ff)
+    this.scene.background = generateBackgroundMaterial()
     this.scene.fog = new THREE.Fog(0x30_e0_30, 500, 10_000)
     const aspect = window.innerWidth / window.innerHeight
 

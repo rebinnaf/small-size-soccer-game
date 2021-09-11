@@ -3,10 +3,14 @@ import GroundImage from '@/assets/ground-material.jpg'
 import BallImage from '@/assets/ball-material.png'
 import GoalImage from '@/assets/goal-material.png'
 
+import Background from '@/assets/models/background'
 
 const textureLoader = new THREE.TextureLoader()
 const cubeTextureLoader = new THREE.CubeTextureLoader()
 
+export function generateBackgroundMaterial() {
+  return cubeTextureLoader.load(Background)
+}
 export function generateGroundMaterial() {
   return new THREE.MeshBasicMaterial({
     map: textureLoader.load(GroundImage)
