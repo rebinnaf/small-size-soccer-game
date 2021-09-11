@@ -1,7 +1,7 @@
 import * as THREE from 'three'
-import GroundImage from '@/assets/ground-material.jpg'
-import BallImage from '@/assets/ball-material.png'
-import GoalImage from '@/assets/goal-material.png'
+import GroundImage from '@/assets/textures/ground-material.jpg'
+import BallImage from '@/assets/textures/ball-material.png'
+import GoalImage from '@/assets/textures/goal-material.png'
 
 import Background from '@/assets/models/background'
 
