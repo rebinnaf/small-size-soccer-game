@@ -7,7 +7,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 
-@Component({ name: 'TeamPalette', components: {} })
+@Component({ name: 'TeamBoard', components: {} })
 export default class MyComponent extends Vue {
   @Prop() private color!: string
 

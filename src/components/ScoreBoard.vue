@@ -8,7 +8,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import TeamBoard from './TeamBoard.vue'
 
-@Component({ name: 'ScorePalette', components: { TeamBoard } })
+@Component({ name: 'ScoreBoard', components: { TeamBoard } })
 export default class MyComponent extends Vue {}
 </script>
 <style scoped lang="scss"></style>
