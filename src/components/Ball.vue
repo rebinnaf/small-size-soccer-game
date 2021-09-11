@@ -18,9 +18,12 @@ export default class Ground extends Vue {
 
   @Prop() private frustumSize!: number
 
-  private material = generateBallMaterial()
+  // computed
+  get radius() {
+    return this.frustumSize / 80
+  }
 
-  private radius!: number
+  private material = generateBallMaterial()
 
   private geometry!: THREE.SphereGeometry
 
@@ -31,7 +34,6 @@ export default class Ground extends Vue {
   }
 
   private initializeGround() {
-    this.radius = this.frustumSize / 80
     this.geometry = generateBallGeometry(this.radius)
     this.mesh = new THREE.Mesh(this.geometry, this.material)
     this.mesh.castShadow = true
