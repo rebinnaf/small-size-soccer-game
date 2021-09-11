@@ -3,6 +3,8 @@
     <Sky :scene="scene" :frustum-size="frustumSize"></Sky>
     <Ground :scene="scene" :frustum-size="frustumSize"></Ground>
     <Ball :scene="scene" :frustum-size="frustumSize"></Ball>
+    <Goal :scene="scene" :frustum-size="frustumSize" side="right"></Goal>
+    <Goal :scene="scene" :frustum-size="frustumSize" side="left"></Goal>
   </div>
 </template>
 <script lang="ts">
@@ -11,11 +13,11 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import Ground from './Ground.vue'
 import Ball from './Ball.vue'
-import Sky from './Sky.vue'
+import Goal from './Goal.vue'
 
 @Component({
   name: 'Scene',
-  components: { Ground, Ball, Sky }
+  components: { Ground, Ball, Goal }
 })
 export default class Scene extends Vue {
   private renderer = new THREE.WebGLRenderer({ antialias: true })
@@ -27,8 +29,6 @@ export default class Scene extends Vue {
   private frustumSize = 60
 
   private controls!: OrbitControls
-
-  ring!: THREE.Mesh
 
   mounted() {
     this.initializeScene()
@@ -54,7 +54,6 @@ export default class Scene extends Vue {
     this.renderer.setSize(window.innerWidth, window.innerHeight)
     document.body.append(this.renderer.domElement)
 
-    this.scene.add(this.ring)
     this.animate()
   }
 

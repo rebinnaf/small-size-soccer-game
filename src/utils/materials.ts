@@ -1,7 +1,8 @@
 import * as THREE from 'three'
 import GroundImage from '@/assets/ground-material.jpg'
 import BallImage from '@/assets/ball-material.png'
-import SkyImage from '@/assets/sky-material.jpg'
+import GoalImage from '@/assets/goal-material.png'
+
 
 const textureLoader = new THREE.TextureLoader()
 const cubeTextureLoader = new THREE.CubeTextureLoader()
@@ -17,8 +18,26 @@ export function generateBallMaterial() {
     map: textureLoader.load(BallImage)
   })
 }
-export function generateSkyMaterial() {
-  return new THREE.MeshBasicMaterial({
-    map: textureLoader.load(SkyImage)
+
+export function generateGoalMaterial() {
+  const clothTexture = textureLoader.load(GoalImage)
+  clothTexture.anisotropy = 16
+
+  const clothMaterial = new THREE.MeshLambertMaterial({
+    alphaMap: clothTexture,
+    side: THREE.DoubleSide,
+    alphaTest: 0.9
   })
+  return [
+    new THREE.MeshLambertMaterial({
+      opacity: 0,
+      color: 0x00_00_ff,
+      transparent: true
+    }),
+    clothMaterial,
+    clothMaterial,
+    clothMaterial,
+    clothMaterial,
+    clothMaterial
+  ]
 }
