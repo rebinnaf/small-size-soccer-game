@@ -1,27 +1,26 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-import NotFound from '../views/NotFound.vue';
-import Layout from '../views/Layout.vue';
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import NotFound from '../views/NotFound.vue'
+import Layout from '../views/Layout.vue'
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
     name: 'Game',
-    component: Layout,
+    component: Layout
   },
   {
     path: '*',
     name: 'NotFound',
-    component: NotFound,
-  },
-
-];
+    component: NotFound
+  }
+]
 
 const router = new VueRouter({
   mode: 'history',
-  routes,
-});
+  routes
+})
 
-export default router;
+export default router
