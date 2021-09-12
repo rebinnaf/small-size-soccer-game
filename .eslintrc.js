@@ -19,7 +19,9 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'unicorn/no-nested-ternary': 'off',
     'unicorn/filename-case': 'off',
-    'unicorn/prefer-module': 'off'
+    'unicorn/prefer-module': 'off',
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': ['error']
   },
   parserOptions: {
     parser: '@typescript-eslint/parser'
