@@ -2,23 +2,26 @@
   <div></div>
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Prop } from 'vue-property-decorator'
 
 import * as THREE from 'three'
-import { generateGoalMaterial } from '../utils/materials'
+import GoalImage from '@/assets/textures/goal-material.png'
+import BaseMesh from './BaseMesh.vue'
 
 @Component({
   name: 'Goal',
   components: {}
 })
-export default class Ground extends Vue {
-  @Prop() private scene!: THREE.Scene
-
-  @Prop() private frustumSize!: number
-
+export default class Goal extends BaseMesh {
   @Prop() private side!: string
 
+  protected material!: THREE.MeshLambertMaterial
+
   // computed
+  get radius() {
+    return this.frustumSize / 80
+  }
+
   get size() {
     return this.frustumSize / 10
   }
@@ -31,26 +34,44 @@ export default class Ground extends Vue {
     return this.isLeftSide ? -3.1 * this.size : 3.1 * this.size
   }
 
-  private material = generateGoalMaterial()
-
-  private geometry!: THREE.BoxGeometry
-
-  private mesh!: THREE.Mesh
-
   mounted() {
-    this.initializeGround()
+    this.initialize()
   }
 
-  private initializeGround() {
-    this.geometry = new THREE.BoxGeometry(this.size / 4, this.size, 1.5 * this.size)
-    this.mesh = new THREE.Mesh(this.geometry, this.material)
+  generateGeometry(): THREE.BoxGeometry {
+    return new THREE.BoxGeometry(this.size / 4, this.size, 1.5 * this.size)
+  }
+
+  generateMaterial(): THREE.MeshLambertMaterial[] {
+    const clothTexture = this.textureLoader.load(GoalImage)
+    clothTexture.anisotropy = 16
+
+    const clothMaterial = new THREE.MeshLambertMaterial({
+      alphaMap: clothTexture,
+      side: THREE.DoubleSide,
+      alphaTest: 0.9
+    })
+    return [
+      new THREE.MeshLambertMaterial({
+        opacity: 0,
+        color: 0x00_00_ff,
+        transparent: true
+      }),
+      clothMaterial,
+      clothMaterial,
+      clothMaterial,
+      clothMaterial,
+      clothMaterial
+    ]
+  }
+
+  configMesh() {
     this.mesh.castShadow = true
 
     this.mesh.position.set(this.posX, this.size / 2, 0)
     if (!this.isLeftSide) {
       this.mesh.rotation.y = Math.PI
     }
-    this.scene.add(this.mesh)
   }
 }
 </script>

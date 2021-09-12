@@ -2,44 +2,43 @@
   <div></div>
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component } from 'vue-property-decorator'
 
 import * as THREE from 'three'
 
-import { generateBallMaterial } from '../utils/materials'
-import { generateBallGeometry } from '../utils/geometries'
+import BallImage from '@/assets/textures/ball-material.png'
+import BaseMesh from './BaseMesh.vue'
 
 @Component({
   name: 'Ball',
   components: {}
 })
-export default class Ground extends Vue {
-  @Prop() private scene!: THREE.Scene
-
-  @Prop() private frustumSize!: number
+export default class Ball extends BaseMesh {
+  protected material!: THREE.MeshLambertMaterial
 
   // computed
   get radius() {
     return this.frustumSize / 80
   }
 
-  private material = generateBallMaterial()
-
-  private geometry!: THREE.SphereGeometry
-
-  private mesh!: THREE.Mesh
-
   mounted() {
-    this.initializeGround()
+    this.initialize()
   }
 
-  private initializeGround() {
-    this.geometry = generateBallGeometry(this.radius)
-    this.mesh = new THREE.Mesh(this.geometry, this.material)
+  generateGeometry(): THREE.SphereGeometry {
+    return new THREE.SphereGeometry(this.radius, this.radius * 20, this.radius * 10)
+  }
+
+  generateMaterial(): THREE.MeshLambertMaterial {
+    return new THREE.MeshLambertMaterial({
+      color: '#ffffff',
+      map: this.textureLoader.load(BallImage)
+    })
+  }
+
+  configMesh() {
     this.mesh.castShadow = true
     this.mesh.position.set(0, this.radius, 0)
-
-    this.scene.add(this.mesh)
   }
 }
 </script>

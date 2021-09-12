@@ -2,39 +2,40 @@
   <div></div>
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component } from 'vue-property-decorator'
 
 import * as THREE from 'three'
-
-import { generateGroundMaterial } from '../utils/materials'
-import { generateGroundGeometry } from '../utils/geometries'
+import GroundImage from '@/assets/textures/ground-material.jpg'
+import BaseMesh from './BaseMesh.vue'
 
 @Component({
   name: 'Ground',
   components: {}
 })
-export default class Ground extends Vue {
-  @Prop() private scene!: THREE.Scene
+export default class Ground extends BaseMesh {
+  protected material!: THREE.MeshBasicMaterial
 
-  @Prop() private frustumSize!: number
-
-  private material = generateGroundMaterial()
-
-  private geometry!: THREE.PlaneGeometry
-
-  private mesh!: THREE.Mesh
-
-  mounted() {
-    this.initializeGround()
+  // computed
+  get groundSize(): number {
+    return this.frustumSize / 2
   }
 
-  private initializeGround() {
-    this.geometry = generateGroundGeometry(this.frustumSize / 2)
-    this.material = generateGroundMaterial()
-    this.mesh = new THREE.Mesh(this.geometry, this.material)
-    this.mesh.rotation.x = Math.PI * -0.5
+  mounted() {
+    this.initialize()
+  }
 
-    this.scene.add(this.mesh)
+  generateGeometry(): THREE.PlaneGeometry {
+    return new THREE.PlaneGeometry((this.groundSize * 4) / 3, this.groundSize)
+  }
+
+  generateMaterial(): THREE.MeshBasicMaterial {
+    return new THREE.MeshBasicMaterial({
+      map: this.textureLoader.load(GroundImage)
+    })
+  }
+
+  configMesh() {
+    this.mesh.rotation.x = Math.PI * -0.5
   }
 }
 </script>
