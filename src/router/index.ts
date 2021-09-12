@@ -19,6 +19,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
+  base: '/small-size-soccer-game/',
   mode: 'history',
   routes
 })
