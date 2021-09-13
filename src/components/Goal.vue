@@ -51,15 +51,17 @@ export default class Goal extends BaseMesh {
       side: THREE.DoubleSide,
       alphaTest: 0.9
     })
+
+    const transparentMaterial = new THREE.MeshLambertMaterial({
+      opacity: 0,
+      color: 0x00_00_ff,
+      transparent: true
+    })
     return [
-      new THREE.MeshLambertMaterial({
-        opacity: 0,
-        color: 0x00_00_ff,
-        transparent: true
-      }),
+      transparentMaterial,
       clothMaterial,
       clothMaterial,
-      clothMaterial,
+      transparentMaterial,
       clothMaterial,
       clothMaterial
     ]
