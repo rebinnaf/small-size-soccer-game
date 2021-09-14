@@ -67,7 +67,7 @@ export default class Goal extends BaseMesh {
     ]
   }
 
-  configMesh() {
+  configMesh(): void {
     this.mesh.castShadow = true
 
     this.mesh.position.set(this.posX, this.size / 2, 0)

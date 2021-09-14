@@ -36,7 +36,7 @@ export default class Scene extends Vue {
     this.initializeScene()
   }
 
-  private initializeScene() {
+  private initializeScene(): void {
     this.configBackground()
     this.configCamera()
     this.configControls()
@@ -48,20 +48,20 @@ export default class Scene extends Vue {
     this.animate()
   }
 
-  configBackground() {
+  configBackground(): void {
     const cubeTextureLoader = new THREE.CubeTextureLoader()
 
     this.scene.background = cubeTextureLoader.load(Background)
   }
 
-  configCamera() {
+  configCamera(): void {
     const aspect = window.innerWidth / window.innerHeight
 
     this.camera = new THREE.PerspectiveCamera(this.frustumSize, aspect, 1, 100)
     this.camera.position.set(0, this.frustumSize / 3, this.frustumSize / 2)
   }
 
-  configControls() {
+  configControls(): void {
     this.controls = new OrbitControls(this.camera, this.renderer.domElement)
     this.controls.target.set(0, 5, 0)
     this.controls.maxPolarAngle = Math.PI * 0.5
@@ -69,12 +69,12 @@ export default class Scene extends Vue {
     this.controls.maxDistance = 5000
   }
 
-  configLight() {
+  configLight(): void {
     const ambientLight = new THREE.AmbientLight(0xff_ff_ff, 0.6)
     this.scene.add(ambientLight)
   }
 
-  resizeRendererToDisplaySize() {
+  resizeRendererToDisplaySize(): Boolean {
     const canvas = this.renderer.domElement
     const width = canvas.clientWidth
     const height = canvas.clientHeight
@@ -85,7 +85,7 @@ export default class Scene extends Vue {
     return needResize
   }
 
-  animate() {
+  animate(): void {
     if (this.resizeRendererToDisplaySize()) {
       const canvas = this.renderer.domElement
       this.camera.aspect = canvas.clientWidth / canvas.clientHeight

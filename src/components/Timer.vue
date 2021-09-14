@@ -26,7 +26,7 @@ export default class MyComponent extends Vue {
     setInterval(this.updateTime, 1000)
   }
 
-  updateTime() {
+  updateTime(): void {
     this.seconds += 1
     if (this.seconds === 60) {
       this.minutes += 1
