@@ -34,7 +34,7 @@ export default class Ground extends BaseMesh {
     })
   }
 
-  configMesh() {
+  configMesh(): void {
     this.mesh.rotation.x = Math.PI * -0.5
   }
 }

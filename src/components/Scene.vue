@@ -11,11 +11,13 @@
 import { Component, Vue } from 'vue-property-decorator'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { generateBackgroundMaterial } from '@/utils/materials'
+import Background from '@/assets/models/background'
 import Ground from './Ground.vue'
 import Ball from './Ball.vue'
 import Player from './Player.vue'
 import Goal from './Goal.vue'
+
+export const FRAUSTUM_SIZE = 60
 
 @Component({
   name: 'Scene',
@@ -28,7 +30,7 @@ export default class Scene extends Vue {
 
   private scene = new THREE.Scene()
 
-  private frustumSize = 60
+  private frustumSize = FRAUSTUM_SIZE
 
   private controls!: OrbitControls
 
@@ -36,21 +38,11 @@ export default class Scene extends Vue {
     this.initializeScene()
   }
 
-  private initializeScene() {
-    this.scene.background = generateBackgroundMaterial()
-    this.scene.fog = new THREE.Fog(0x30_e0_30, 500, 10_000)
-    const aspect = window.innerWidth / window.innerHeight
-
-    this.camera = new THREE.PerspectiveCamera(this.frustumSize, aspect, 1, 100)
-    this.camera.position.set(0, this.frustumSize / 3, this.frustumSize / 2)
-
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement)
-    this.controls.target.set(0, 5, 0)
-    this.controls.maxPolarAngle = Math.PI * 0.5
-    this.controls.minDistance = 0
-    this.controls.maxDistance = 5000
-
-    this.setupLights()
+  private initializeScene(): void {
+    this.configBackground()
+    this.configCamera()
+    this.configControls()
+    this.configLight()
 
     this.renderer.setSize(window.innerWidth, window.innerHeight)
     document.body.append(this.renderer.domElement)
@@ -58,7 +50,28 @@ export default class Scene extends Vue {
     this.animate()
   }
 
-  setupLights() {
+  configBackground(): void {
+    const cubeTextureLoader = new THREE.CubeTextureLoader()
+
+    this.scene.background = cubeTextureLoader.load(Background)
+  }
+
+  configCamera(): void {
+    const aspect = window.innerWidth / window.innerHeight
+
+    this.camera = new THREE.PerspectiveCamera(this.frustumSize, aspect, 1, 100)
+    this.camera.position.set(0, this.frustumSize / 3, this.frustumSize / 2)
+  }
+
+  configControls(): void {
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement)
+    this.controls.target.set(0, 5, 0)
+    this.controls.maxPolarAngle = Math.PI * 0.5
+    this.controls.minDistance = 0
+    this.controls.maxDistance = 5000
+  }
+
+  configLight(): void {
     const ambientLight = new THREE.AmbientLight(0xff_ff_ff, 0.6)
     this.scene.add(ambientLight)
     const color = 0xff_ff_ff
@@ -70,7 +83,7 @@ export default class Scene extends Vue {
     this.scene.add(light.target)
   }
 
-  resizeRendererToDisplaySize() {
+  resizeRendererToDisplaySize(): Boolean {
     const canvas = this.renderer.domElement
     const width = canvas.clientWidth
     const height = canvas.clientHeight
@@ -81,7 +94,7 @@ export default class Scene extends Vue {
     return needResize
   }
 
-  animate() {
+  animate(): void {
     if (this.resizeRendererToDisplaySize()) {
       const canvas = this.renderer.domElement
       this.camera.aspect = canvas.clientWidth / canvas.clientHeight

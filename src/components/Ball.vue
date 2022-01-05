@@ -36,7 +36,7 @@ export default class Ball extends BaseMesh {
     })
   }
 
-  configMesh() {
+  configMesh(): void {
     this.mesh.castShadow = true
     this.mesh.position.set(0, this.radius, 0)
   }
