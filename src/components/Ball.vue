@@ -18,7 +18,7 @@ export default class Ball extends BaseMesh {
 
   // computed
   get radius() {
-    return this.frustumSize / 80
+    return this.frustumSize / 100
   }
 
   mounted() {

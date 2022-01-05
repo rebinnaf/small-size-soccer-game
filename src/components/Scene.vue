@@ -2,6 +2,7 @@
   <div>
     <Ground :scene="scene" :frustum-size="frustumSize"></Ground>
     <Ball :scene="scene" :frustum-size="frustumSize"></Ball>
+    <Player :scene="scene" :frustum-size="frustumSize" team-color="red"></Player>
     <Goal :scene="scene" :frustum-size="frustumSize" side="right"></Goal>
     <Goal :scene="scene" :frustum-size="frustumSize" side="left"></Goal>
   </div>
@@ -13,11 +14,12 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { generateBackgroundMaterial } from '@/utils/materials'
 import Ground from './Ground.vue'
 import Ball from './Ball.vue'
+import Player from './Player.vue'
 import Goal from './Goal.vue'
 
 @Component({
   name: 'Scene',
-  components: { Ground, Ball, Goal }
+  components: { Ground, Ball, Player, Goal }
 })
 export default class Scene extends Vue {
   private renderer = new THREE.WebGLRenderer({ antialias: true })
