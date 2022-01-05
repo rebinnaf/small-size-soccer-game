@@ -48,13 +48,24 @@ export default class Scene extends Vue {
     this.controls.minDistance = 0
     this.controls.maxDistance = 5000
 
-    const ambientLight = new THREE.AmbientLight(0xff_ff_ff, 0.6)
-    this.scene.add(ambientLight)
+    this.setupLights()
 
     this.renderer.setSize(window.innerWidth, window.innerHeight)
     document.body.append(this.renderer.domElement)
 
     this.animate()
+  }
+
+  setupLights() {
+    const ambientLight = new THREE.AmbientLight(0xff_ff_ff, 0.6)
+    this.scene.add(ambientLight)
+    const color = 0xff_ff_ff
+    const intensity = 1
+    const light = new THREE.DirectionalLight(color, intensity)
+    light.position.set(0, 100, 0)
+    light.target.position.set(0, 0, 0)
+    this.scene.add(light)
+    this.scene.add(light.target)
   }
 
   resizeRendererToDisplaySize() {
